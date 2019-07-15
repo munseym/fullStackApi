@@ -2,22 +2,31 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const employeeSchema = new Schema({
-    kind: {
+    first_name: {
         type: String,
         required: true,
     },
-    floor: {
-        type: Number,
-        required: false,
+    last_name: {
+        type: String,
+        required: true,
     },
-    special_monthly_offer: {
-        type: Number,
-        required: false,
-    },
-    company: {
+    preferred_name: {
         type: String,
         required: false,
-    }
+    },
+    position: {
+        type: String,
+        required: false,
+    },
+    birthday: {
+        type: Date,
+        required: false,
+    },
+    email: {
+        type: String,
+        match: /\S+@\S+\.\S+/,
+        required: true,
+    },
 });
 
 module.exports = mongoose.model('Employee', employeeSchema);

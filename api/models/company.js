@@ -1,23 +1,18 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Employee = require('./employee');
 
 const companySchema = new Schema({
-    kind: {
+    name: {
         type: String,
         required: true,
     },
-    floor: {
-        type: Number,
-        required: false,
-    },
-    special_monthly_offer: {
-        type: Number,
-        required: false,
-    },
-    company: {
+    contact_email: {
         type: String,
-        required: false,
-    }
+        match: /\S+@\S+\.\S+/,
+        required: true,
+    },
+    employees: [Employee]
 });
 
 module.exports = mongoose.model('Company', companySchema);
