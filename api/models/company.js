@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Employee = require('./employee');
+const Employee = require('./employee').schema;
 
 const companySchema = new Schema({
     name: {
@@ -13,6 +13,10 @@ const companySchema = new Schema({
         required: true,
     },
     employees: [Employee]
-});
+},
+    {
+        timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
+    }
+);
 
 module.exports = mongoose.model('Company', companySchema);

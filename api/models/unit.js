@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Company = require('./company');
+const Company = require('./company').schema;
 
 const unitSchema = new Schema({
     kind: {
@@ -19,6 +19,9 @@ const unitSchema = new Schema({
         type: Company,
         required: false,
     }
+},
+{
+    timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
 });
 
 module.exports = mongoose.model('Unit', unitSchema);
