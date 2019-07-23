@@ -7,10 +7,12 @@ router.get('/', async (req, res, next) => {
   let response;
   if ('occupied' in req.query) {
     let modQuery = req.query
+    const { occupied } = req.query
     delete modQuery.occupied
-    response = await Unit.find(modQuery).exists('company');
+    modQuery.company = { $exists: occupied }
+    response = await Unit.find(modQuery).select('-__v');
   } else {
-    response = await Unit.find(req.query);
+    response = await Unit.find(req.query).select('-__v');
   }
   res.json({ status, response })
 })
@@ -33,8 +35,7 @@ router.get('/:id/company/employees/:employeeId', async (req, res, next) => {
     .and([
       { _id: req.params.id },
       { 'company.employees._id': req.params.employeeId }
-    ]);
-  console.log(response)
+    ]).select('-__v');
   if (response == null) {
     // could avoid a second call to the database by doing all the filtering in the client, 
     // however return all employees could be an expensive operation
@@ -49,15 +50,43 @@ router.get('/:id/company/employees/:employeeId', async (req, res, next) => {
   }
 })
 
+router.get('/companies', async (req, res, next) => {
+  const status = 200
+  const response = await Unit.find(req.query).select('company');
+  res.json({ status, response })
+})
+
+//INCOMPLETE
+router.get('/companies', async (req, res, next) => {
+  const status = 200
+  const response = await Unit.find(req.query).select('company');
+  res.json({ status, response })
+
+
+  const { fruits } = data;
+  const { name } = req.query;
+  let output;
+  if(name){
+    output = fruits.filter(function(fruit, index, arr){
+      return fruit.name.includes(name.replace(/"/g,""));
+    });
+  }else{
+    output = fruits;
+  }
+  res.json(output)
+})
+
+
 router.post('/:id/company/employees', async (req, res, next) => {
-  const status = 206
+  const status = 201
   let response;
   try {
-    reponse = await Unit.findOneAndUpdate(
+    const employee = await Unit.findOneAndUpdate(
       { _id: req.params.id },
       { $push: { "company.employees": req.body } },
       { new: true }
     );
+    response = await Unit.findById(req.params.id).select('-__v');
     res.status(status).json({ status, response })
   } catch (error) {
     console.log(error)
@@ -70,14 +99,15 @@ router.post('/:id/company/employees', async (req, res, next) => {
 })
 
 router.patch('/:id', async (req, res, next) => {
-  const status = 206
+  const status = 201
   let response;
   try {
-    reponse = await Unit.findOneAndUpdate(
+    await Unit.findOneAndUpdate(
       { _id: req.params.id },
       { $set: req.body },
       { new: true }
     );
+    response = await Unit.findById(req.params.id).select('-__v');
     res.status(status).json({ status, response })
   } catch (error) {
     console.log(error)
@@ -90,15 +120,16 @@ router.patch('/:id', async (req, res, next) => {
 })
 
 router.patch('/:id/company', async (req, res, next) => {
-  const status = 206
+  const status = 201
   let response;
   const company = { company: req.body }
   try {
-    reponse = await Unit.findOneAndUpdate(
+    await Unit.findOneAndUpdate(
       { _id: req.params.id },
       { $set: company },
       { new: true }
     );
+    response = await Unit.findById(req.params.id).select('-__v');
     res.status(status).json({ status, response })
   } catch (error) {
     console.log(error)
@@ -111,14 +142,15 @@ router.patch('/:id/company', async (req, res, next) => {
 })
 
 router.patch('/:id/company/employees/:employeeId', async (req, res, next) => {
-  const status = 206
+  const status = 201
   let response;
   try {
-    reponse = await Unit.findOneAndUpdate(
+    await Unit.findOneAndUpdate(
       { _id: req.params.id, 'company.employees._id': req.params.employeeId },
       { $set: {'company.employees.$': req.body }},
       { new: true }
     )
+    response = await Unit.findById(req.params.id).select('-__v');
     res.status(status).json({ status, response })
   } catch (error) {
     console.log(error)
@@ -131,7 +163,7 @@ router.patch('/:id/company/employees/:employeeId', async (req, res, next) => {
 })
 
 router.delete('/:id/company', async (req, res, next) => {
-  const status = 206
+  const status = 201
   let response;
   try {
     reponse = await Unit.findOneAndUpdate(
@@ -151,7 +183,7 @@ router.delete('/:id/company', async (req, res, next) => {
 })
 
 router.delete('/:id/company/employees/:employeeId', async (req, res, next) => {
-  const status = 206
+  const status = 201
   let response;
   try {
     reponse = await Unit.findOneAndUpdate(
