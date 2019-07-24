@@ -50,32 +50,21 @@ router.get('/:id/company/employees/:employeeId', async (req, res, next) => {
   }
 })
 
-router.get('/companies', async (req, res, next) => {
-  const status = 200
-  const response = await Unit.find(req.query).select('company');
-  res.json({ status, response })
-})
-
-//INCOMPLETE
-router.get('/companies', async (req, res, next) => {
-  const status = 200
-  const response = await Unit.find(req.query).select('company');
-  res.json({ status, response })
-
-
-  const { fruits } = data;
-  const { name } = req.query;
-  let output;
-  if(name){
-    output = fruits.filter(function(fruit, index, arr){
-      return fruit.name.includes(name.replace(/"/g,""));
-    });
-  }else{
-    output = fruits;
-  }
-  res.json(output)
-})
-
+// Not required
+// router.post('/', async (req, res, next) => {
+//   const status = 201
+//   try {
+//     const response = await Unit.create(req.body);
+//     res.json({ status, response })
+//   } catch (error) {
+//     console.log(error.name)
+//     if (error.name === 'ValidationError') {
+//       res.status(400).json({ status: 400, response: error.message })
+//     } else {
+//       res.status(500).json({ status: 500, response: error.message })
+//     }
+//   }
+// })
 
 router.post('/:id/company/employees', async (req, res, next) => {
   const status = 201

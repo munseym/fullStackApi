@@ -45,9 +45,9 @@ Your API should include the following routes with the specified functionality.
 - [X] [DELETE /api/v1/units/[id]/company/employees/[id]](#DELETE-apiv1unitsidcompanyemployeesid)
 
 - [X] [GET /api/v1/companies](#GET-apiv1companies)
-- [ ] [GET /api/v1/companies?name=[partial-query]](#GET-apiv1companiesnamepartial-query)
-- [ ] [GET /api/v1/companies?employees_lte=[integer]](#GET-apiv1companiesemployees_lteinteger)
-- [ ] [GET /api/v1/companies?employees_gte=[integer]](#GET-apiv1companiesemployees_gteinteger)
+- [X] [GET /api/v1/companies?name=[partial-query]](#GET-apiv1companiesnamepartial-query)
+- [X] [GET /api/v1/companies?employees_lte=[integer]](#GET-apiv1companiesemployees_lteinteger)
+- [X] [GET /api/v1/companies?employees_gte=[integer]](#GET-apiv1companiesemployees_gteinteger)
 
 - [ ] [GET /api/v1/employees?name=[partial-query]](#GET-apiv1employeesnamepartial-query)
 - [ ] [GET /api/v1/employees?birthday=[date]](#GET-apiv1employeesbirthdaydate)
