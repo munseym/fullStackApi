@@ -30,9 +30,7 @@ router.get('/', async (req, res, next) => {
                 response = []
             }
         } else {
-            console.log(new Date(birthday).toISOString())
             const employeesByCompany = await Unit.find({ "company.employees.birthday": new Date(birthday).toISOString() })
-            console.log(employeesByCompany)
             // Put all the employees into a single array
             const flatEmployees = employeesByCompany.reduce(function (emp, unit) {
                 emp.push(unit.company.employees);
