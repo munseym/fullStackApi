@@ -49,8 +49,8 @@ Your API should include the following routes with the specified functionality.
 - [X] [GET /api/v1/companies?employees_lte=[integer]](#GET-apiv1companiesemployees_lteinteger)
 - [X] [GET /api/v1/companies?employees_gte=[integer]](#GET-apiv1companiesemployees_gteinteger)
 
-- [ ] [GET /api/v1/employees?name=[partial-query]](#GET-apiv1employeesnamepartial-query)
-- [ ] [GET /api/v1/employees?birthday=[date]](#GET-apiv1employeesbirthdaydate)
+- [X] [GET /api/v1/employees?name=[partial-query]](#GET-apiv1employeesnamepartial-query)
+- [X] [GET /api/v1/employees?birthday=[date]](#GET-apiv1employeesbirthdaydate)
 
 **NOTE: Exclude the `_v` field from each document.**
 
